@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Vigía - Trading Signals</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Librería para gráficos de velas -->
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <!-- Librería para notificaciones push (Telegram) -->
+    <script src="https://cdn.jsdelivr.net/npm/telegram-notification-sender@1.0.0/dist/telegram.min.js"></script>
+</head>
+<body>
+    <div class="login-container" id="loginContainer">
+        <h2>Acceso a El Vigía</h2>
+        <input type="password" id="passwordInput" placeholder="Contraseña">
+        <button onclick="checkPassword()">Entrar</button>
+        <p class="error" id="loginError"></p>
+    </div>
+
+    <div id="dashboard" style="display: none;">
+        <nav>
+            <h1>📡 EL VIGÍA - Trading Signals</h1>
+            <div>
+                <a href="#" onclick="showSection('live')">Señales en Vivo</a>
+                <a href="#" onclick="showSection('backtest')">Backtesting</a>
+                <a href="#" onclick="showSection('config')">Configuración</a>
+                <a href="#" onclick="logout()">Salir</a>
+            </div>
+        </nav>
+
+        <!-- Sección Señales en Vivo -->
+        <div id="liveSection" class="section">
+            <h2>🔔 Señales Generadas en Tiempo Real</h2>
+            <div class="panel">
+                <label>Apalancamiento:</label>
+                <input type="number" id="apalancamiento" value="100">
+                <label>Lotaje:</label>
+                <input type="number" id="lotaje" value="0.1">
+                <label>Capital ($):</label>
+                <input type="number" id="capital" value="550">
+                <label>Riesgo %:</label>
+                <input type="number" id="riesgo" value="2">
+                <button onclick="calcularLotes()">Calcular Lote Recomendado</button>
+                <span id="loteRecomendado"></span>
+            </div>
+            <div class="signals-container" id="signals">
+                <!-- Las señales se insertarán aquí -->
+            </div>
+        </div>
+
+        <!-- Sección Backtesting -->
+        <div id="backtestSection" class="section" style="display: none;">
+            <h2>📈 Backtesting Histórico</h2>
+            <select id="estrategiaBacktest">
+                <option value="apalancamiento">Tendencia + Pirámide</option>
+                <option value="binarias">Triple Confirmación</option>
+            </select>
+            <input type="text" id="activoBacktest" placeholder="Activo (ej. XAUUSD)">
+            <input type="number" id="diasBacktest" placeholder="Días a analizar" value="30">
+            <button onclick="ejecutarBacktest()">Ejecutar Backtest</button>
+            <div id="resultadosBacktest"></div>
+            <div id="graficoBacktest"></div>
+        </div>
+
+        <!-- Sección Configuración -->
+        <div id="configSection" class="section" style="display: none;">
+            <h2>⚙️ Configuración</h2>
+            <label>Token de Telegram (para notificaciones):</label>
+            <input type="text" id="telegramToken" placeholder="Token">
+            <label>Chat ID de Telegram:</label>
+            <input type="text" id="telegramChatId" placeholder="Chat ID">
+            <button onclick="guardarConfigTelegram()">Guardar</button>
+            <p>Los datos se guardan localmente en tu navegador.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
